@@ -1,9 +1,9 @@
-<ul>
-	<li><a href="{{route('trangchu')}}">Trang chủ</a></li>
-	<li><a href="{{route('student_dkphong')}}">Đăng ký phòng ở</a></li>
-	<li><a href="{{route('student_xemdk')}}">Xem đăng ký</a></li>
-	<li><a href="{{route('student_bancp')}}">Danh sách bạn cùng phòng</a></li>
-	<li><a href="{{route('student_ttcn')}}">Thông tin cá nhân</a></li>
-	<li><a href="{{route('student_cbql')}}">Cán bộ quản lý</a></li>
-	<li><a class="{{route('student_doimk')}}">Đổi mật khẩu</a></li>
+<ul id="main-menu" class="">
+	<li class="active"><a href="{{route('trangchu')}}"><i class="fa fa-home"></i><span>Trang chủ</span></a></li>
+	<li><a href="{{route('student_dkphong')}}"><i class="fa fa-thumbs-o-up"></i><span>Đăng ký phòng ở</span></a></li>
+	<li><a href="{{route('student_xemdk')}}"><i class="fa fa-eye"></i><span>Lịch sử đăng ký</span></a></li>
+	<li><a href="{{route('student_bancp')}}"><i class="fa fa-ellipsis-v"></i><i class="fa fa-ellipsis-v"></i><span>Danh sách bạn cùng phòng</span></a></li>
+	<li><a href="{{route('student_ttcn')}}"><i class="fa fa-user"></i><span>Thông tin cá nhân</span></a></li>
+	<li><a href="{{route('student_cbql')}}"><i class="fa fa-users"></i></i><span>Cán bộ quản lý</span></a></li>
+	<li><a href="{{route('student_doimk')}}"><i class="fa fa-lock"></i><span>Đổi mật khẩu</span></a></li>
 </ul>

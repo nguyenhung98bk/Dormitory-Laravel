@@ -15,8 +15,10 @@
 			<h1 class="title">HUST</h1>
 			<h2 class="title">Ký Túc Xá Bách khoa </br> Đại học Bách Khoa Hà Nội</h2>
 		</div>
-		<div class="title2">PHẦN MỀM QUẢN LÝ KÝ TÚC XÁ</div>
-		@yield('content')
+		<div class="content">
+			<div class="title2">PHẦN MỀM QUẢN LÝ KÝ TÚC XÁ</div>
+			@yield('content')
+		</div>
 		<div class="webtrang"></div>
 		<div class="toolbar_bottom_fix">
             <div class="pull-left">Ký túc xá Đại học Bách Khoa Hà Nội. Địa chỉ: Phường Bách Khoa- Hai Bà Trưng- Hà Nội. Điện thoại:0335615050</div>                                   

@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Validator;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Facades\Auth;
+use App\users;
+use App\User;
+use Hash;
+use App\sinhvien;
 
 class LoginController extends Controller
 {
@@ -15,13 +19,10 @@ class LoginController extends Controller
     public function postLogin(Request $request) {
     	$rules = [
     		'email' =>'required|email',
-    		'password' => 'required|min:8'
+    		'password' => 'required|min:6'
     	];
     	$messages = [
-    		'email.required' => 'Email là trường bắt buộc',
-    		'email.email' => 'Email không đúng định dạng',
-    		'password.required' => 'Mật khẩu là trường bắt buộc',
-    		'password.min' => 'Mật khẩu phải chứa ít nhất 8 ký tự',
+    		'password.min' => 'Mật khẩu phải chứa ít nhất 6 ký tự',
     	];
     	$validator = Validator::make($request->all(), $rules, $messages);
 
@@ -42,6 +43,38 @@ class LoginController extends Controller
 		Auth::logout();
 		return redirect('login');
 	}
+    public function register(Request $request){
+        $rules = [
+            'email' =>'required|email',
+            'password' => 'required|min:6|confirmed'
+        ];
+        $messages = [
+            'password.min' => 'Mật khẩu phải chứa ít nhất 6 ký tự',
+            'password.confirmed' => 'Xác nhận mật khẩu không đúng'
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        } else {
+            $email = $request->input('email');
+            $count = users::where('email',$email)->count();
+            if($count>0){
+                return redirect()->back()->with(['flag'=>'danger','message'=>'Email đã được sử dụng']);   
+            }
+            else{
+                $user = new User();
+                sinhvien::insert(['email'=>$email]);
+                $user->name = $request->name;
+                $user->email = $request->email;
+                $user->password = Hash::make($request->password);
+                $user->image = "user.jpg";
+                $user->ltk = "sinhvien";
+                $user->save();
+                return redirect()->back()->with(['flag'=>'danger','message'=>'Tạo thành khoản thành công']);   
+            }
+        }
+    }
 }
 
 ?>

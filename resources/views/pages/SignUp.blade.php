@@ -1,26 +1,30 @@
 @extends('trangchu_master')
 @section('content')
 <div class="login-area">
-			<div class="login-content">
-				<form method="post" role="form" id="form_login" action="../function/registration.php">
-					<table class="loginform_row" width="100%" cellpadding="10	" cellspacing="0" style="font-size: 10pt;" border="0">
-					<tr><td><input type="text" class="input-field" name="Hoten" placeholder="Họ tên" required autocomplete="off" maxlength="30"></td>
-					<td><input type="text" class="input-field" name="Username" placeholder="Tên đăng nhập" required autocomplete="off" maxlength="30"></td></tr>
-					<tr><td><input type="Password" class="input-field" name="Password" placeholder="Mật khẩu" required autocomplete="off" maxlength="30"></td>
-					<td><input type="Password" class="input-field" name="Confirmpassword" placeholder="Xác nhận mật khẩu" required autocomplete="off" maxlength="30"></td></tr>
-					<tr><td><input type="text" class="input-field" name="Sdt" placeholder="Số điện thoại" required autocomplete="off" maxlength="11"></td>
-						<td><input type="text" class="input-field" name="Mssv" maxlength="8" placeholder="Mã số sinh viên" required autocomplete="off"></td></tr>
-					<tr>
-					<td><input type="text" class="input-field" name="Lop" placeholder="Lớp-Khóa" required autocomplete="off" maxlength="10"></td>
-					<td><input type="text" class="input-field" name="Quequan" placeholder="Quê quán" required autocomplete="off" maxlength="20"></td></tr>
-					<tr><td width="220px"><div>Ngày sinh:</div></td>
-						<td><input type="date" class="input-field" name="Ngaysinh" placeholder="Ngày sinh" required autocomplete="off"></td>
-					</tr>
-					</table>	
-					<div class="Gioitinh">Giới tính: 
-							<input type="radio" name="Gioitinh" value="nam" required checked="checked" autocomplete="off"> Nam <input type="radio" name="Gioitinh" value="nu" required autocomplete="off"> Nữ </div>					
-					<button type="submit" class="btn btn-primary">Đăng Ký</button>
-				</form>
+	<div class="login-content">
+		<form method="post" role="form" id="form_login"
+            action="{{url('register')}}">
+			<div class="form-group">
+				<input type="hidden" name="_token" value="{{ csrf_token() }} ">
+				<input type="text" class="input-field" name="name" placeholder="Họ tên"
+                	required autocomplete="off" maxlength="30">
+				<input type="email" class="input-field" name="email" placeholder="Email"
+                	required autocomplete="off" maxlength="30">
+				<input type="Password" class="input-field" name="password" placeholder="Mật khẩu"
+                	required maxlength="30">
+                <input id="password-confirm" type="password" class="input-field" name="password_confirmation" placeholder="Xác nhận mật khẩu" required maxlength="30">
+                @if($errors->has('password'))
+					<div class="error"><p>{{$errors->first('password')}}</p></div>
+				@endif
+				@if(Session::has('flag'))
+					<div class="error"><p>{{Session::get('message')}}</p></div>
+				@endif
+				<button type="submit" class="btn btn-primary">Đăng ký</button>
 			</div>
-		</div>		
+		</form>
+		<div class="login-bottom-links">
+			<a href="{{route('login')}}"><button class="links">Đăng nhập</button></a>
+		</div>
+	</div>
+</div>		
 @endsection
