@@ -53,7 +53,7 @@ Route::get('Forgot',[
 }]);
 
 Route::get('mahoa',function(){
-	DB::table('users')->update(['password' => bcrypt('12345678')]);
+	DB::table('users')->update(['password' => bcrypt('123456')]);
 });
 
 #--------------------------------------
@@ -65,6 +65,11 @@ Route::get('ql_duyetdk','PageController@ql_duyetdk')->name('ql_duyetdk');
 Route::get('ql_ttsv','PageController@ql_ttsv')->name('ql_ttsv');
 Route::get('ql_cpsv','PageController@ql_cpsv')->name('ql_cpsv');
 Route::get('ql_thongke','PageController@ql_thongke')->name('ql_thongke');
+Route::get('ql_ttphong/{id}','LoadController@ql_ttphong')->name('ql_ttphong');
+Route::get('get_ql_duyetdk/{mssv}','LoadController@get_ql_duyetdk')->name('get_ql_duyetdk');
+Route::get('get_ql_huydk/{mssv}','LoadController@get_ql_huydk')->name('get_ql_huydk');
+Route::get('get_ql_ttsv/{mssv}','LoadController@get_ql_ttsv')->name('get_ql_ttsv');
+Route::post('post_ql_ttsv','LoadController@post_ql_ttsv')->name('post_ql_ttsv');
 
 
 ?>

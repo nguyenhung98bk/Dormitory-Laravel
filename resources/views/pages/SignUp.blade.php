@@ -6,6 +6,8 @@
             action="{{url('register')}}">
 			<div class="form-group">
 				<input type="hidden" name="_token" value="{{ csrf_token() }} ">
+				<input type="text" class="input-field" name="mssv" placeholder="Mã số sinh viên"
+                	required autocomplete="off" maxlength="8">
 				<input type="text" class="input-field" name="name" placeholder="Họ tên"
                 	required autocomplete="off" maxlength="30">
 				<input type="email" class="input-field" name="email" placeholder="Email"

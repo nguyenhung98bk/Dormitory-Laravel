@@ -63,15 +63,22 @@ class LoginController extends Controller
                 return redirect()->back()->with(['flag'=>'danger','message'=>'Email đã được sử dụng']);   
             }
             else{
-                $user = new User();
-                sinhvien::insert(['email'=>$email]);
-                $user->name = $request->name;
-                $user->email = $request->email;
-                $user->password = Hash::make($request->password);
-                $user->image = "user.jpg";
-                $user->ltk = "sinhvien";
-                $user->save();
-                return redirect()->back()->with(['flag'=>'danger','message'=>'Tạo thành khoản thành công']);   
+                $mssv = $request->input(('mssv'));
+                $count1 = sinhvien::where('mssv',$mssv)->count();
+                if($count1>0){
+                    return redirect()->back()->with(['flag'=>'danger','message'=>'Mssv đã được sử dụng']);    
+                }
+                else{
+                    $user = new User();
+                    sinhvien::insert(['mssv'=>$mssv,'email'=>$email]);
+                    $user->name = $request->name;
+                    $user->email = $request->email;
+                    $user->password = Hash::make($request->password);
+                    $user->image = "user.jpg";
+                    $user->ltk = "sinhvien";
+                    $user->save();
+                    return redirect()->back()->with(['flag'=>'danger','message'=>'Tạo thành khoản thành công']);
+                }   
             }
         }
     }

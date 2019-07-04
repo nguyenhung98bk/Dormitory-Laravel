@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\phieudangky;
+use App\canboquanly;
 use App\sinhvien;
 use Illuminate\Support\Facades\Auth;
 use App\phong;
@@ -25,7 +26,20 @@ class LoadController extends Controller
    		$sncur = $ttphong->sncur;
    		$snmax = $ttphong->snmax;
    		$gioitinh = $ttphong->gioitinh;
-   		$count = phieudangky::where('mssv',$mssv)->count();
+   		$count = phieudangky::where([
+            ['mssv',$mssv],
+            ['nam',date('Y')],
+            ['trangthaidk','!=','cancelled']
+         ])->count();
+         $count1 = phieudangky::where([
+            ['mssv',$mssv],
+            ['nam',date('Y')],
+            ['trangthaidk','=','cancelled']
+         ])->count();
+         if($gtsv==""){
+            return redirect()->back()->with(['flag'=>'danger','message'=>'Vui lòng cập nhật thông tin cá nhân  ']);
+         }
+         else{
    		if($count!=0){
    			return redirect()->back()->with(['flag'=>'danger','message'=>'Sinh viên đã đăng ký ở năm nay']);
    		}
@@ -36,11 +50,22 @@ class LoadController extends Controller
    			return redirect()->back()->with(['flag'=>'danger','message'=>'Phòng đã đầy']);
    		}
    		else{
-   			phieudangky::insert(['id_phong'=>$id,'mssv'=>$mssv,'nam'=>date('Y'),'trangthaidk'=>'registered','ngaydk'=>date('Y-m-d'),'lephi'=>$giaphong*(13-date('m')),'name'=>Auth::user()->name]);
-   			$sncur=$sncur+1;
-   			DB::table('phong')->where('id',$id)->update(['sncur'=>$sncur]);
-   			return redirect('student_xemdk');
-   		}
+            if($count1==0){
+   			   phieudangky::insert(['id_phong'=>$id,'mssv'=>$mssv,'nam'=>date('Y'),'trangthaidk'=>'registered','ngaydk'=>date('Y-m-d'),'lephi'=>$giaphong*(13-date('m')),'name'=>Auth::user()->name]);
+   			   $sncur=$sncur+1;
+   			   DB::table('phong')->where('id',$id)->update(['sncur'=>$sncur]);
+   			   return redirect('student_xemdk');
+            }
+            else{
+               phieudangky::where([
+                  ['mssv',$mssv],
+                  ['nam',date('Y')]
+               ])->update(['trangthaidk'=>'registered']);
+               $sncur=$sncur+1;
+               DB::table('phong')->where('id',$id)->update(['sncur'=>$sncur]);
+               return redirect('student_xemdk');
+            }
+   		}}
    	}
       public function getStudent_chinhsua(){
          return view('pages.Student_chinhsua');
@@ -57,19 +82,76 @@ class LoadController extends Controller
 
          if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
-         } else {
+         } 
+         else {
             $email = Auth::user()->email;
             $password = $request->input('password_cur');
             $password_new = $request->input('password');
 
-         if( Auth::attempt(['email' => $email, 'password' =>$password])) {
+            if( Auth::attempt(['email' => $email, 'password' =>$password])) {
                users::where('email',$email)->update(['password'=>bcrypt($password_new)]);
                return redirect()->back()->with(['flag'=>'success','message'=>'Đổi mật khẩu thành công']);;
-         } else {
+            } 
+            else {
                return redirect()->back()->with(['flag'=>'danger','message'=>'Mật khẩu không chính xác']);
+            }
          }
       }
-   }
+
+      public function ql_ttphong($id){
+         $list = phieudangky::where([
+            ['id_phong',$id],
+            ['nam',date('Y')]
+         ])->get();
+         return view('pages.ql_ttphong',['list'=>$list]);
+      }
+      public function get_ql_duyetdk($mssv){
+         phieudangky::where([
+            ['mssv',$mssv],
+            ['nam',date('Y')],
+         ])->update(['trangthaidk'=>"success"]);
+         return redirect()->back();
+      }
+      public function get_ql_huydk($mssv){
+         $id_phong = phieudangky::where([
+            ['mssv',$mssv],
+            ['nam',date('Y')],
+         ])->value('id_phong');
+         $sncur = phong::where('id',$id_phong)->value('sncur');
+         $sncur = $sncur-1;
+         phieudangky::where([
+            ['mssv',$mssv],
+            ['nam',date('Y')],
+         ])->update(['trangthaidk'=>"cancelled"]);
+         phong::where('id',$id_phong)->update(['sncur'=>$sncur]);
+         return redirect()->back();
+      }
+      public function get_ql_ttsv($mssv){
+         $ttsv = sinhvien::where('mssv',$mssv)->first();
+         $name = users::where('email',$ttsv->email)->value('name');
+         return view('pages.ql_ttsv',['ttsv'=>$ttsv,'name'=>$name]);
+      }
+      public function post_ql_ttsv(Request $request){
+         $id_khu = canboquanly::where('email',Auth::user()->email)->value('id_khu');
+         $mssv = $request->input('mssv');
+         $max = phong::where('id_khu',$id_khu)->max('id');
+         $count = phong::where('id_khu',$id_khu)->count();
+         $lsdk = phieudangky::where([
+            ['mssv',$mssv],
+            ['trangthaidk','!=','cancelled'],
+            ['id_phong','>',($max-$count)],
+            ['id_phong','<=',$max]
+         ])->orderBy('nam','desc')->get();
+         $ttphong = phong::all();
+         if($lsdk==null){
+            return redirect('ql_ttsv')->with(['flag'=>'danger','message'=>'Không thể xem thông tin sinh viên']);
+         }
+         else{
+            $ttsv = sinhvien::where('mssv',$mssv)->first();
+            $name = users::where('email',$ttsv->email)->value('name');
+            return view('pages.ql_ttsv',['ttsv'=>$ttsv,'name'=>$name,'ttphong'=>$ttphong,'lsdk'=>$lsdk]);
+         }
+      }
 }
 
 

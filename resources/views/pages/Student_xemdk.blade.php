@@ -9,9 +9,8 @@
 		<table class="table table-bordered table-striped datatable" id="table_export">
 		<thead>
 			<tr>
-				<th>Mssv</th>
-				<th>Họ Tên</th>
-				<th>Năm</th>
+				<th>Phòng đã đăng ký</th>
+				<th>Năm đăng ký</th>
 				<th>Trạng thái đăng ký</th>
 				<th>Ngày đăng ký</th>
 				<th>Ngày duyệt</th>
@@ -22,12 +21,21 @@
 		<tbody>
 			@foreach($lsdk as $l)
 			<tr>
-				<td>{{$l->mssv}}</td>
-				<td>{{$l->name}}</td>
+				<td>
+					@foreach($ttphong as $t)
+						@if($t->id == $l->id_phong)
+							@foreach($ttkhu as $k)
+								@if($k->id == $t->id_khu)
+									{{$k->tenkhu."-".$t->sophong}}
+								@endif
+							@endforeach
+						@endif
+					@endforeach
+				</td>
 				<td>{{$l->nam}}</td>
 				<td><span class="label label-success" style="font-size: 15px;">{{$l->trangthaidk}}</span></td>
 				<td>{{$l->ngaydk}}</td>
-				<td>{{$l->ngayduyet}}</td>
+				<td>{{$l->updated_at}}</td>
 				<td>{{$l->lephi}}</td>
 				<td>{{$l->mscb}}</td>		
 			</tr>

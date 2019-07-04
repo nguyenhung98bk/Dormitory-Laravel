@@ -29,7 +29,19 @@ class PageController extends Controller
         return view('pages.Student_dkphong',['ttphong'=>$ttphong]);
     }
     public function student_bancp(){
-    	return view('pages.Student_bancp');
+        $mssv = sinhvien::where('email',Auth::user()->email)->value('mssv');
+        $id_phong = phieudangky::where([
+            ['mssv',$mssv],
+            ['nam',date('Y')],
+            ['trangthaidk','success']
+        ])->value('id_phong');
+        $list = phieudangky::where([
+            ['nam',date('Y')],
+            ['trangthaidk','success'],
+            ['id_phong',$id_phong]
+        ])->get();
+        $ttsv = sinhvien::all();
+    	return view('pages.Student_bancp',['list'=>$list,'ttsv'=>$ttsv]);
     }
     public function student_cbql(){
         $cbql = users::where('ltk','quanly')->get();
@@ -45,20 +57,34 @@ class PageController extends Controller
     public function student_xemdk(){
         $mssv = sinhvien::where('email',Auth::user()->email)->value('mssv');
         $lsdk = phieudangky::where('mssv','=',$mssv)->get();
+        $ttphong = phong::all();
         $count = phieudangky::where('mssv','=',$mssv)->count();
-    	return view('pages.Student_xemdk',['lsdk'=>$lsdk,'count'=>$count]);
+        $ttkhu = khuktx::all();
+    	return view('pages.Student_xemdk',['lsdk'=>$lsdk,'count'=>$count,'ttphong'=>$ttphong,'ttkhu'=>$ttkhu]);
     }
     public function ql_phong(){
-        return view('pages.ql_phong');
+        $id_khu = canboquanly::where('email',Auth::user()->email)->value('id_khu');
+        $ttphong = phong::where('id_khu',$id_khu)->paginate(7);
+        return view('pages.ql_phong',['ttphong'=>$ttphong]);
     }
     public function ql_duyetdk(){
-        return view('pages.ql_duyetdk');
+        $id_khu = canboquanly::where('email',Auth::user()->email)->value('id_khu');
+        $ttphong = phong::where('id_khu',$id_khu)->get();
+        $max = phong::where('id_khu',$id_khu)->max('id');
+        $count = phong::where('id_khu',$id_khu)->count();
+        $list = phieudangky::where([
+            ['nam',date('Y')],
+            ['trangthaidk','registered'],
+            ['id_phong','>',($max-$count)],
+            ['id_phong','<=',$max]
+        ])->get();
+        return view('pages.ql_duyetdk',['list'=>$list,'ttphong'=>$ttphong]);
     }
     public function ql_ttsv(){
         return view('pages.ql_ttsv');
     }
     public function ql_cpsv(){
-        return view('pages.ql_cpsvg');
+        return view('pages.ql_cpsv');
     }
     public function ql_thongke(){
         return view('pages.ql_thongke');

@@ -1,7 +1,7 @@
 @extends('master')
 @section('content')
 <h3 style="">
-    <i class="entypo-right-circled"></i>
+    <i class="fa fa-arrow-circle-o-right"></i>
     Quản lý hồ sơ           
 </h3>
 ﻿<div class="row">
@@ -35,7 +35,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Mã số sinh viên</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" name="mssv" value="{{$ttsv->mssv}}" required/>
+                                <label class=" control-label">{{$ttsv->mssv}}</label>
                             </div>
                         </div>
                         <div class="form-group">
