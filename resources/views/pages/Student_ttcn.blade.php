@@ -19,7 +19,8 @@
             <!----EDITING FORM STARTS-->
             <div class="tab-pane box active" id="list" style="padding: 5px">
                 <div class="box-content">
-                	<form action="" method="post" class="form-horizontal form-groups-bordered validate" target="_top" enctype="multipart/form-data">
+                	<form action="{{url('student_suatt')}}" method="post" class="form-horizontal form-groups-bordered validate" target="_top" enctype="multipart/form-data">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }} ">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Tên</label>
                             <div class="col-sm-5">
@@ -51,31 +52,25 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Giới tính</label>
                             <div class="col-sm-3">
-                                <select name="sex" class="form-control required">
-                                  <option value="">Chọn</option>
-                                  <option value="male" selected>Nam</option>
-                                  <option value="female">Nữ</option>
+                                <select name="gtsv" class="form-control required">
+                                    @if($ttsv->gtsv=="nam")
+                                        <option value="">Chọn</option>
+                                        <option value="nam" selected>Nam</option>
+                                        <option value="nu">Nữ</option>
+                                    @elseif($ttsv->gtsv=="nu")
+                                        <option value="">Chọn</option>
+                                        <option value="nam">Nam</option>
+                                        <option value="nu" selected="">Nữ</option>
+                                    @else
+                                        <option value="">Chọn</option>
+                                        <option value="nam">Nam</option>
+                                        <option value="nu">Nữ</option>
+                                    @endif
                               </select>
                             </div>
                             <label class="col-sm-2 control-label">Quê Quán</label>
                             <div class="col-sm-3">
-                            	<select name="QueQuan" id = "fa_province" class="form-control required">
-                            		<option value="">Chọn tỉnh</option>
-                            		<option value="Ha Noi" >Thành phố Hà Nội</option>
-                            		<option value="Ha Giang" >Tỉnh Hà Giang</option>
-                            		<option value="Cao Bang" >Tỉnh Cao Bằng</option>
-                            		<option value="Bac Kan" >Tỉnh Bắc Kạn</option>
-                            		<option value="Tuyen Quang" >Tỉnh Tuyên Quang</option>
-                            		<option value="Lao cai" >Tỉnh Lào Cai</option>
-                            		<option value="Dien Bien" >Tỉnh Điện Biên</option>
-                            		<option value="Lai Chau" >Tỉnh Lai Châu</option>
-                            		<option value="Son La" >Tỉnh Sơn La</option>
-                            		<option value="Yen Bai" >Tỉnh Yên Bái</option>
-                            		<option value="17" >Tỉnh Hoà Bình</option>
-                            		<option value="19" >Tỉnh Thái Nguyên</option>
-                            		<option value="20" >Tỉnh Lạng Sơn</option>
-                            		<option value="22" >Tỉnh Quảng Ninh</option>
-                            	</select>
+                                <input type="text" class="form-control" name="qqsv" value="{{$ttsv->qqsv}}" required/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -85,7 +80,7 @@
                             </div>
                             <label class="col-sm-2 control-label">Khóa</label>
                             <div class="col-sm-3">
-                                <select name="sex" class="form-control required">
+                                <select name="khoa" class="form-control required">
                                 	@if($ttsv->khoa!=null)
                                 		<option value="{{$ttsv->khoa}}">{{strtoupper($ttsv->khoa)}}</option>
                                 	@endif

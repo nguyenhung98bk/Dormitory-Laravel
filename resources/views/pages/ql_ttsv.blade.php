@@ -117,7 +117,17 @@
                     @endforeach
                 </td>
                 <td>{{$l->nam}}</td>
-                <td><span class="label label-success" style="font-size: 15px;">{{$l->trangthaidk}}</span></td>
+                <td>
+                    <span @if($l->trangthaidk=="registered")
+                                class="label label-warning"
+                            @elseif($l->trangthaidk=="success")
+                                class="label label-success"
+                            @elseif($l->trangthaidk=="cancelled")
+                                class="label label-danger"
+                            @else class="label label-success" 
+                            @endif 
+                            style="font-size: 15px;">{{$l->trangthaidk}}</span>
+                </td>
                 <td>{{$l->ngaydk}}</td>
                 <td>{{$l->updated_at}}</td>
                 <td>{{$l->lephi}}</td>

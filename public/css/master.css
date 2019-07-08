@@ -14,3 +14,13 @@
 	float: right;
 	padding-right: 80px;
 }
+.tab-content .box-content h3{
+	padding-top: 80px;
+	padding-bottom: 20px;
+}
+h4.thongbaoNull{
+	text-align: center;
+	padding-top: 50px;
+	color: red;
+	font-size: 16px;
+}

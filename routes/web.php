@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 
 Route::get('trangchu','PageController@trangchu')->name('trangchu');
 
@@ -31,6 +27,7 @@ Route::get('get_student_dkphong/{id}','LoadController@get_student_dkphong')->nam
 Route::get('student_chonphong/{id}','PageController@student_chonphong')->name('student_chonphong');
 Route::get('student_chinhsua','LoadController@getStudent_chinhsua')->name('student_chinhsua');
 Route::post('student_chinhsua','LoadController@postStudent_chinhsua')->name('student_chinhsua');
+Route::post('student_suatt','LoadController@student_suatt')->name('student_suatt');
 
 #-----------------------------------
 
@@ -69,7 +66,9 @@ Route::get('ql_ttphong/{id}','LoadController@ql_ttphong')->name('ql_ttphong');
 Route::get('get_ql_duyetdk/{mssv}','LoadController@get_ql_duyetdk')->name('get_ql_duyetdk');
 Route::get('get_ql_huydk/{mssv}','LoadController@get_ql_huydk')->name('get_ql_huydk');
 Route::get('get_ql_ttsv/{mssv}','LoadController@get_ql_ttsv')->name('get_ql_ttsv');
+Route::get('get_ql_xoasv/{mssv}','LoadController@get_ql_xoasv')->name('get_ql_xoasv');
 Route::post('post_ql_ttsv','LoadController@post_ql_ttsv')->name('post_ql_ttsv');
+Route::post('post_ql_thongke','LoadController@post_ql_thongke')->name('post_ql_thongke');
 
 
 ?>

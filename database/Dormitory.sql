@@ -26,7 +26,7 @@ create table canboquanly (
     
 create table phieudangky(
 	id_phong int not null,
-	mssv int not null,
+	mssv varchar(8) not null,
 	name varchar(30) not null,
 	nam int not null,
 	trangthaidk varchar(20) not null,
@@ -37,20 +37,25 @@ create table phieudangky(
     );
 
 create table sinhvien (
-	mssv int not null,
-    nssv date not null,
-	gtsv varchar(5) not null,
-	lop varchar(10) not null,
-	qqsv varchar(20) not null,
+	mssv varchar(8) not null,
+    nssv date,
+	gtsv varchar(5),
+	lop varchar(10),
+	khoa varchar(5),
+	qqsv varchar(20),
 	email varchar(50) not null,
-	sdt varchar(11) not null
+	sdt varchar(11),
+	updated_at date
     );
+
+ALTER TABLE `users` ADD `image` VARCHAR(100) NOT NULL AFTER `email`;
+ALTER TABLE `users` ADD `ltk` VARCHAR(11) NOT NULL AFTER `image`;
     
-alter table phong add constraint pkey_ttp primary key (id);
-alter table khuktx add constraint pkey_kkt primary key (id);
-alter table canboquanly add constraint pkey_cbql primary key (mscb);
-alter table sinhvien add constraint pkey_sv primary key (mssv);
-alter table phieudangky add constraint pkey_id primary key (id_phong,mssv,nam);
+alter table phong add  primary key (id);
+alter table khuktx add primary key (id);
+alter table canboquanly primary key (mscb);
+alter table sinhvien add primary key (mssv);
+alter table phieudangky add primary key (id_phong,mssv,nam);
 
 alter table phong add constraint fk_p_k foreign key (id_khu) references khuktx(id);
 alter table canboquanly add constraint fk_c_k foreign key (id_khu) references khuktx(id);

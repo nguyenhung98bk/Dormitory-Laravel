@@ -46,11 +46,13 @@ class LoginController extends Controller
     public function register(Request $request){
         $rules = [
             'email' =>'required|email',
-            'password' => 'required|min:6|confirmed'
+            'password' => 'required|min:6|confirmed',
+            'mssv' => 'required|min:8'
         ];
         $messages = [
             'password.min' => 'Mật khẩu phải chứa ít nhất 6 ký tự',
-            'password.confirmed' => 'Xác nhận mật khẩu không đúng'
+            'password.confirmed' => 'Xác nhận mật khẩu không đúng',
+            'mssv.min' => 'Mã số sinh viên có độ dài là 8 ký tự'
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
 

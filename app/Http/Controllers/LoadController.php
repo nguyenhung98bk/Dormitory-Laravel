@@ -101,18 +101,21 @@ class LoadController extends Controller
       public function ql_ttphong($id){
          $list = phieudangky::where([
             ['id_phong',$id],
-            ['nam',date('Y')]
+            ['nam',date('Y')],
+            ['trangthaidk','!=','cancelled']
          ])->get();
          return view('pages.ql_ttphong',['list'=>$list]);
       }
       public function get_ql_duyetdk($mssv){
+         $mscb = canboquanly::where('email',Auth::user()->email)->value('mscb');
          phieudangky::where([
             ['mssv',$mssv],
             ['nam',date('Y')],
-         ])->update(['trangthaidk'=>"success"]);
+         ])->update(['trangthaidk'=>"success",'mscb'=>$mscb]);
          return redirect()->back();
       }
       public function get_ql_huydk($mssv){
+         $mscb = canboquanly::where('email',Auth::user()->email)->value('mscb');
          $id_phong = phieudangky::where([
             ['mssv',$mssv],
             ['nam',date('Y')],
@@ -122,14 +125,24 @@ class LoadController extends Controller
          phieudangky::where([
             ['mssv',$mssv],
             ['nam',date('Y')],
-         ])->update(['trangthaidk'=>"cancelled"]);
+         ])->update(['trangthaidk'=>"cancelled",'mscb'=>$mscb]);
          phong::where('id',$id_phong)->update(['sncur'=>$sncur]);
          return redirect()->back();
       }
       public function get_ql_ttsv($mssv){
+         $id_khu = canboquanly::where('email',Auth::user()->email)->value('id_khu');
+         $max = phong::where('id_khu',$id_khu)->max('id');
+         $count = phong::where('id_khu',$id_khu)->count();
          $ttsv = sinhvien::where('mssv',$mssv)->first();
          $name = users::where('email',$ttsv->email)->value('name');
-         return view('pages.ql_ttsv',['ttsv'=>$ttsv,'name'=>$name]);
+         $lsdk = phieudangky::where([
+            ['mssv',$mssv],
+            ['trangthaidk','!=','cancelled'],
+            ['id_phong','>',($max-$count)],
+            ['id_phong','<=',$max]
+         ])->orderBy('nam','desc')->get();
+         $ttphong = phong::all();
+         return view('pages.ql_ttsv',['ttsv'=>$ttsv,'name'=>$name,'ttphong'=>$ttphong,'lsdk'=>$lsdk]);
       }
       public function post_ql_ttsv(Request $request){
          $id_khu = canboquanly::where('email',Auth::user()->email)->value('id_khu');
@@ -151,6 +164,64 @@ class LoadController extends Controller
             $name = users::where('email',$ttsv->email)->value('name');
             return view('pages.ql_ttsv',['ttsv'=>$ttsv,'name'=>$name,'ttphong'=>$ttphong,'lsdk'=>$lsdk]);
          }
+      }
+      public function get_ql_xoasv($mssv){
+         $id_phong = phieudangky::where([
+            ['mssv',$mssv],
+            ['nam',date('Y')],
+         ])->value('id_phong');
+         $sncur = phong::where('id',$id_phong)->value('sncur');
+         $sncur = $sncur-1;
+         phieudangky::where([
+            ['mssv',$mssv],
+            ['nam',date('Y')],
+         ])->update(['trangthaidk'=>"cancelled"]);
+         phong::where('id',$id_phong)->update(['sncur'=>$sncur]);
+         return redirect()->back();
+      }
+      public function student_suatt(Request $request){
+         $nssv = $request->input('birthday');
+         $gtsv = $request->input('gtsv');
+         $lop = $request->input('lop');
+         $khoa = $request->input('khoa');
+         $qqsv = $request->input('qqsv');
+         $sdt = $request->input('phone');
+         sinhvien::where('email',Auth::user()->email)->update(['nssv'=>$nssv,'gtsv'=>$gtsv,'lop'=>$lop,'khoa'=>$khoa,'qqsv'=>$qqsv,'sdt'=>$sdt]);
+         return redirect()->back();
+      }
+      public function post_ql_thongke(Request $request){
+         $year = $request->input(('nam'));
+         $list_nam = phieudangky::select('nam')->groupBy('nam')->get();
+        $id_khu = canboquanly::where('email',Auth::user()->email)->value('id_khu');
+        $max = phong::where('id_khu',$id_khu)->max('id');
+        $count = phong::where('id_khu',$id_khu)->count();
+        $nam = phong::where([
+            ['id_khu',$id_khu],
+            ['gioitinh','nam'],
+        ])->sum('snmax');
+        $nu = phong::where([
+            ['id_khu',$id_khu],
+            ['gioitinh','nu']
+        ])->sum('snmax');
+        $nam_dkcur = phong::where([
+            ['id_khu',$id_khu],
+            ['gioitinh','nam']
+        ])->sum('sncur');
+        $nu_dkcur = phong::where([
+            ['id_khu',$id_khu],
+            ['gioitinh','nu']
+        ])->sum('sncur');
+        $total_student = phieudangky::where([
+            ['nam',$year],
+            ['trangthaidk','!=','cancelled'],
+            ['trangthaidk','!=','registered']
+        ])->count();
+        $total_money = phieudangky::where([
+            ['nam',$year],
+            ['trangthaidk','!=','cancelled'],
+            ['trangthaidk','!=','registered']
+        ])->sum('lephi');
+        return view('pages.ql_thongke',['nam'=>$nam,'nu'=>$nu,'nam_dkcur'=>$nam_dkcur,'nu_dkcur'=>$nu_dkcur,'total_student'=>$total_student,'total_money'=>$total_money,'list_nam'=>$list_nam,'year'=>$year]);
       }
 }
 

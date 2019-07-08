@@ -4,6 +4,9 @@
          	<i class="fa fa-arrow-circle-o-right"></i>
                 Danh sách thành viên trong phòng           
     </h3>
+    @if(count($list)==0)
+    	<h4 class="thongbaoNull">Danh sách thành viên phòng trống</h4>
+    @else
 	<div class="lsdk">
 		<table class="table table-bordered table-striped datatable" id="table_export">
 			<tr>
@@ -27,4 +30,6 @@
 			</tr>
 			@endforeach
 		</table>
+	</div>
+	@endif
 @endsection

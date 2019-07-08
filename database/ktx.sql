@@ -4,6 +4,10 @@ INSERT into users(name,email,password,ltk) values ('Lê Thanh Bình','cb3@gmail.
 INSERT into users(name,email,password,ltk) values ('Bùi Thị Thu','cb4@gmail.com', '12345678', 'quanly');
 INSERT into users(name,email,password,ltk) values ('admin','admin@gmail.com','12345678','admin');
 
+INSERT into khuktx values (1, 'B1', 400000);
+INSERT into khuktx values (2, 'B2', 300000);
+INSERT into khuktx values (3, 'B3', 200000);
+
 INSERT into canboquanly values (1001, date '1970-6-1','nu','Ha Noi','0983774999','cb1@gmail.com',1);
 INSERT into canboquanly values (1002, date '1965-8-12','nam','Ha Noi','0989666888','cb2@gmail.com',2);
 INSERT into canboquanly values (1003, date '1972-2-26','nam','Ha Noi','0989123456','cb3@gmail.com',3);
@@ -72,9 +76,7 @@ INSERT into phong(sncur,snmax,sophong,gioitinh,id,id_khu) values (0, 6, 403, 'na
 INSERT into phong(sncur,snmax,sophong,gioitinh,id,id_khu) values (0, 6, 404, 'nam', 59, 3);
 INSERT into phong(sncur,snmax,sophong,gioitinh,id,id_khu) values (0, 6, 405, 'nam', 60, 3);
 
-INSERT into khuktx values (1, 'B1', 400000);
-INSERT into khuktx values (2, 'B2', 300000);
-INSERT into khuktx values (3, 'B3', 200000);
+
 
 
 

@@ -58,9 +58,8 @@ class PageController extends Controller
         $mssv = sinhvien::where('email',Auth::user()->email)->value('mssv');
         $lsdk = phieudangky::where('mssv','=',$mssv)->get();
         $ttphong = phong::all();
-        $count = phieudangky::where('mssv','=',$mssv)->count();
         $ttkhu = khuktx::all();
-    	return view('pages.Student_xemdk',['lsdk'=>$lsdk,'count'=>$count,'ttphong'=>$ttphong,'ttkhu'=>$ttkhu]);
+    	return view('pages.Student_xemdk',['lsdk'=>$lsdk,'ttphong'=>$ttphong,'ttkhu'=>$ttkhu]);
     }
     public function ql_phong(){
         $id_khu = canboquanly::where('email',Auth::user()->email)->value('id_khu');
@@ -87,6 +86,38 @@ class PageController extends Controller
         return view('pages.ql_cpsv');
     }
     public function ql_thongke(){
-        return view('pages.ql_thongke');
+        $list_nam = phieudangky::select('nam')->groupBy('nam')->get();
+        $year = Date('Y');
+        $id_khu = canboquanly::where('email',Auth::user()->email)->value('id_khu');
+        $max = phong::where('id_khu',$id_khu)->max('id');
+        $count = phong::where('id_khu',$id_khu)->count();
+        $nam = phong::where([
+            ['id_khu',$id_khu],
+            ['gioitinh','nam']
+        ])->sum('snmax');
+        $nu = phong::where([
+            ['id_khu',$id_khu],
+            ['gioitinh','nu']
+        ])->sum('snmax');
+        $nam_dkcur = phong::where([
+            ['id_khu',$id_khu],
+            ['gioitinh','nam']
+        ])->sum('sncur');
+        $nu_dkcur = phong::where([
+            ['id_khu',$id_khu],
+            ['gioitinh','nu']
+        ])->sum('sncur');
+        $total_student = phieudangky::where([
+            ['nam',date('Y')],
+            ['trangthaidk','!=','cancelled'],
+            ['trangthaidk','!=','registered']
+        ])->count();
+        $total_money = phieudangky::where([
+            ['nam',date('Y')],
+            ['trangthaidk','!=','cancelled'],
+            ['trangthaidk','!=','registered']
+        ])->sum('lephi');
+
+        return view('pages.ql_thongke',['nam'=>$nam,'nu'=>$nu,'nam_dkcur'=>$nam_dkcur,'nu_dkcur'=>$nu_dkcur,'total_student'=>$total_student,'total_money'=>$total_money,'list_nam'=>$list_nam,'year'=>$year]);
     }
 }

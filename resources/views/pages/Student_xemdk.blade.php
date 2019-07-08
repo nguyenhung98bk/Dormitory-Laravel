@@ -1,10 +1,10 @@
 @extends('master')
 @section('content')
-	@if($count!=0)
 		<h3 style="">
          	<i class="fa fa-arrow-circle-o-right"></i>
                 Lịch sử đăng ký           
         </h3>
+        @if(count($lsdk)!=0)
 		<div class="lsdk">
 		<table class="table table-bordered table-striped datatable" id="table_export">
 		<thead>
@@ -33,7 +33,17 @@
 					@endforeach
 				</td>
 				<td>{{$l->nam}}</td>
-				<td><span class="label label-success" style="font-size: 15px;">{{$l->trangthaidk}}</span></td>
+				<td>
+					<span @if($l->trangthaidk=="registered")
+								class="label label-warning"
+							@elseif($l->trangthaidk=="success")
+								class="label label-success"
+							@elseif($l->trangthaidk=="cancelled")
+								class="label label-danger"
+							@else class="label label-success" 
+							@endif 
+							style="font-size: 15px;">{{$l->trangthaidk}}</span>
+				</td>
 				<td>{{$l->ngaydk}}</td>
 				<td>{{$l->updated_at}}</td>
 				<td>{{$l->lephi}}</td>
@@ -46,7 +56,7 @@
 		</div>
 	@else 
 	<div>
-		<h2>Bạn chưa có lịch sử đăng ký</h2>
+		<h4 class="thongbaoNull">Lịch sử đăng ký trống</h4>
 	</div>
 	@endif
 @endsection

@@ -4,6 +4,9 @@
          <i class="fa fa-arrow-circle-o-right"></i>
             Danh sách sinh viên đăng ký phòng        
     </h3>
+    @if(count($list)==0)
+    	<h4 class="thongbaoNull">Danh sách sinh viên đăng ký trống</h4>
+    @else
 	<table class="table table-bordered table-striped datatable" id="table_export">
 		<tr>
 			<th>Mssv</th>
@@ -34,4 +37,5 @@
 		</tr>
 		@endforeach
 	</table>
+	@endif
 @endsection
