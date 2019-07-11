@@ -15,13 +15,14 @@ create table khuktx (
     );
     
 create table canboquanly (
-	mscb int not null,
+	mscb varchar(4) not null,
 	nscb date not null,
 	gtcb varchar(5) not null,
 	qqcb varchar(20) not null,
 	sdt varchar(11) not null,
 	email varchar(50) not null,
-	id_khu int not null
+	id_khu int not null,
+	updated_at date
     );
     
 create table phieudangky(

@@ -120,4 +120,22 @@ class PageController extends Controller
 
         return view('pages.ql_thongke',['nam'=>$nam,'nu'=>$nu,'nam_dkcur'=>$nam_dkcur,'nu_dkcur'=>$nu_dkcur,'total_student'=>$total_student,'total_money'=>$total_money,'list_nam'=>$list_nam,'year'=>$year]);
     }
+
+    public function ad_dscb(){
+        $cbql = users::where('ltk','quanly')->get();
+        return view('pages.admin_dscb',['cbql'=>$cbql]);
+    }
+    public function ad_themcb(){
+        $mscb = canboquanly::max('mscb');
+        $mscb = $mscb + 1;
+        return view('pages.admin_taotk',['mscb'=>$mscb]);
+    }
+    public function ad_thongke(){
+        $list_nam = phieudangky::select('nam')->groupBy('nam')->get();
+        $list_khu = khuktx::all();
+        return view('pages.admin_thongke',['list_nam'=>$list_nam,'list_khu'=>$list_khu]);
+    }
+    public function ad_ttcb(){
+        return view('pages.admin_ttcb');
+    }
 }

@@ -7,7 +7,7 @@
 			<div class="form-group">
 				<input type="hidden" name="_token" value="{{ csrf_token() }} ">
 				<input type="email" class="input-field" name="email" placeholder="Email"
-                	required autocomplete="off" maxlength="30">
+                	required maxlength="30">
                 <br>
 				<input type="Password" class="input-field" name="password" placeholder="Mật khẩu"
                 	required maxlength="30">

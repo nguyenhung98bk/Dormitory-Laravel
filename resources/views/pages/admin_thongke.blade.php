@@ -14,8 +14,9 @@
                 </a>
             </li>
         </ul>
+    <div class="form-group">
         <div class="col-sm-3">
-            <form action="{{url('post_ql_thongke')}}" method="post" class="form-horizontal form-groups-bordered validate" target="_top" enctype="multipart/form-data">
+            <form action="{{url('post_ad_thongke')}}" method="post" class="form-horizontal form-groups-bordered validate" target="_top" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="{{ csrf_token() }} ">
                 <select name="nam" class="form-control required">
                     <option value="">Chọn năm</option>
@@ -23,16 +24,25 @@
                         <option value="{{$l->nam}}">{{$l->nam}}</option>
                     @endforeach
                 </select>
+                <input type="hidden" name="_token" value="{{ csrf_token() }} ">
+                <select name="mskhu" class="form-control required">
+                    <option value="">Chọn khu ở</option>
+                    @foreach($list_khu as $k)
+                        <option value="{{$k->id}}">{{$k->tenkhu}}</option>
+                    @endforeach
+                </select>
                 <div class="col-sm-offset-3 col-sm-5">
                     <button type="submit" class="btn btn-info">Xem thống kê</button>
                 </div>
             </form>
         </div>
+    </div>
+        @if(isset($nam))
         <div class="tab-content">
             <!----EDITING FORM STARTS-->
             <div class="tab-pane box active" id="list" style="padding: 5px">
                 <div class="box-content">
-                    <h3><i class="fa fa-arrow-circle-o-right"></i>Thống kê năm {{$year}}</h3>
+                    <h3><i class="fa fa-arrow-circle-o-right"></i>Thống kê khu {{$khu}} năm {{$year}}</h3>
                     <form action="" method="post" class="form-horizontal form-groups-bordered validate" target="_top" enctype="multipart/form-data">
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Tống số chỗ ở nam</label>
@@ -68,6 +78,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
     </div>
 @endsection

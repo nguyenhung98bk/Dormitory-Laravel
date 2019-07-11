@@ -70,5 +70,19 @@ Route::get('get_ql_xoasv/{mssv}','LoadController@get_ql_xoasv')->name('get_ql_xo
 Route::post('post_ql_ttsv','LoadController@post_ql_ttsv')->name('post_ql_ttsv');
 Route::post('post_ql_thongke','LoadController@post_ql_thongke')->name('post_ql_thongke');
 
+#----------------------------------------
+
+#------------Admin-----------------------
+
+Route::get('ad_dscb','PageController@ad_dscb')->name('ad_dscb');
+Route::get('ad_ttcb','PageController@ad_ttcb')->name('ad_ttcb');
+Route::get('ad_themcb','PageController@ad_themcb')->name('ad_themcb');
+Route::get('ad_thongke','PageController@ad_thongke')->name('ad_thongke');
+Route::get('ad_xemcb/{id}','LoadController@ad_xemcb')->name('ad_xemcb');
+Route::get('ad_xoacb/{id}','LoadController@ad_xoacb')->name('ad_xoacb');
+Route::post('post_ad_ttcb','LoadController@post_ad_ttcb')->name('post_ad_ttcb');
+Route::post('ad_suatt/{mscb}','LoadController@ad_suatt')->name('ad_suatt');
+Route::post('ad_taotk','LoginController@ad_taotk')->name('ad_taotk');
+Route::post('post_ad_thongke','LoadController@post_ad_thongke')->name('post_ad_thongke');
 
 ?>

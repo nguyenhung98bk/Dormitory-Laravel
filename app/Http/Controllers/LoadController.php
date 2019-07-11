@@ -186,11 +186,19 @@ class LoadController extends Controller
          $khoa = $request->input('khoa');
          $qqsv = $request->input('qqsv');
          $sdt = $request->input('phone');
-         sinhvien::where('email',Auth::user()->email)->update(['nssv'=>$nssv,'gtsv'=>$gtsv,'lop'=>$lop,'khoa'=>$khoa,'qqsv'=>$qqsv,'sdt'=>$sdt]);
-         return redirect()->back();
+         $mssv = sinhvien::where('email',Auth::user()->email)->value('mssv');
+         $count = phieudangky::where('mssv',$mssv)->count();
+         if($count!=0){
+            sinhvien::where('email',Auth::user()->email)->update(['nssv'=>$nssv,'lop'=>$lop,'khoa'=>$khoa,'qqsv'=>$qqsv,'sdt'=>$sdt]);
+            return redirect()->back()->with(['flag2'=>'danger','message'=>'Cập nhật thông tin thành công']);
+         }
+         else{
+            sinhvien::where('email',Auth::user()->email)->update(['nssv'=>$nssv,'gtsv'=>$gtsv,'lop'=>$lop,'khoa'=>$khoa,'qqsv'=>$qqsv,'sdt'=>$sdt]);
+            return redirect()->back()->with(['flag2'=>'danger','message'=>'Cập nhật thông tin thành công']);
+         }
       }
       public function post_ql_thongke(Request $request){
-         $year = $request->input(('nam'));
+         $year = $request->input('nam');
          $list_nam = phieudangky::select('nam')->groupBy('nam')->get();
         $id_khu = canboquanly::where('email',Auth::user()->email)->value('id_khu');
         $max = phong::where('id_khu',$id_khu)->max('id');
@@ -223,6 +231,85 @@ class LoadController extends Controller
         ])->sum('lephi');
         return view('pages.ql_thongke',['nam'=>$nam,'nu'=>$nu,'nam_dkcur'=>$nam_dkcur,'nu_dkcur'=>$nu_dkcur,'total_student'=>$total_student,'total_money'=>$total_money,'list_nam'=>$list_nam,'year'=>$year]);
       }
+
+      public function ad_xemcb($id){
+         $email = users::where('id',$id)->value('email');
+         $name = users::where('id',$id)->value('name');
+         $ttcb = canboquanly::where('email',$email)->first();
+         $ttkhu = khuktx::all();
+         $tenkhu = khuktx::where('id',$ttcb->id_khu)->value('tenkhu');
+         return view('pages.admin_ttcb',['ttcb'=>$ttcb,'tenkhu'=>$tenkhu,'name'=>$name,'ttkhu'=>$ttkhu]);
+      }
+      public function ad_xoacb($id){
+         $email = users::where('id',$id)->value('email');
+         canboquanly::where('email',$email)->delete();
+         users::where('email',$email)->delete();
+         return redirect()->back();
+      }
+      public function post_ad_ttcb(Request $request){
+         $mscb = $request->input('mscb');
+         $count = canboquanly::where('mscb',$mscb)->count();
+         if($count!=1){
+            return redirect('ad_ttcb')->with(['flag'=>'danger','message'=>'Mã số cán bộ quản lý không tồn tại']);
+         }
+         else{
+            $ttcb = canboquanly::where('mscb',$mscb)->first();
+            $name = users::where('email',$ttcb->email)->value('name');
+            $ttkhu = khuktx::all();
+            $tenkhu = khuktx::where('id',$ttcb->id_khu)->value('tenkhu');
+            return view('pages.admin_ttcb',['ttcb'=>$ttcb,'tenkhu'=>$tenkhu,'name'=>$name,'ttkhu'=>$ttkhu]);
+         }
+      }
+
+      public function ad_suatt(Request $request,$mscb){
+         $tenkhu = $request->input('tenkhu');
+         $sdt = $request->input('phone');
+         $nscb = $request->input('birthday');
+         $gtcb = $request->input('gtcb');
+         $quequan = $request->input('quequan');
+         $id_khu = khuktx::where('tenkhu',$tenkhu)->value('id');
+         canboquanly::where('mscb',$mscb)->update(['nscb'=>$nscb,'gtcb'=>$gtcb,'qqcb'=>$quequan,'sdt'=>$sdt,'id_khu'=>$id_khu]);
+         $email = canboquanly::where('mscb',$mscb)->value('email');
+         $id = users::where('email',$email)->value('id');
+         return redirect()->route('ad_xemcb',$id)->with(['flag2'=>'danger','message'=>'Cập nhật thông tin thành công']);;
+      }
+      public function post_ad_thongke(Request $request){
+         $year = $request->input('nam');
+         $list_nam = phieudangky::select('nam')->groupBy('nam')->get();
+        $id_khu = $request->input('mskhu');
+        $max = phong::where('id_khu',$id_khu)->max('id');
+        $count = phong::where('id_khu',$id_khu)->count();
+        $nam = phong::where([
+            ['id_khu',$id_khu],
+            ['gioitinh','nam'],
+        ])->sum('snmax');
+        $nu = phong::where([
+            ['id_khu',$id_khu],
+            ['gioitinh','nu']
+        ])->sum('snmax');
+        $nam_dkcur = phong::where([
+            ['id_khu',$id_khu],
+            ['gioitinh','nam']
+        ])->sum('sncur');
+        $nu_dkcur = phong::where([
+            ['id_khu',$id_khu],
+            ['gioitinh','nu']
+        ])->sum('sncur');
+        $total_student = phieudangky::where([
+            ['nam',$year],
+            ['trangthaidk','!=','cancelled'],
+            ['trangthaidk','!=','registered']
+        ])->count();
+        $total_money = phieudangky::where([
+            ['nam',$year],
+            ['trangthaidk','!=','cancelled'],
+            ['trangthaidk','!=','registered']
+        ])->sum('lephi');
+        $list_khu = khuktx::all();
+        $khu = khuktx::where('id',$request->input('mskhu'))->value('tenkhu'); 
+        return view('pages.admin_thongke',['nam'=>$nam,'nu'=>$nu,'nam_dkcur'=>$nam_dkcur,'nu_dkcur'=>$nu_dkcur,'total_student'=>$total_student,'total_money'=>$total_money,'list_nam'=>$list_nam,'year'=>$year,'list_khu'=>$list_khu,'khu'=>$khu]);
+      }
+
 }
 
 
