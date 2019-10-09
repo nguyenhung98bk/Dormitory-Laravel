@@ -6,23 +6,26 @@
     	<title>Login | webktx.bk      </title>
     	<meta name="description" content="">
      	<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="shortcut icon" href="img/unnamed.jpg">	
+		<link rel="shortcut icon" href="../img/unnamed.jpg">	
 		<link rel="stylesheet" href="{{asset('css/style.css')}}">
     </head>
     <body>
-		<div class="login-header">
-			<img class="title-img" src="img/image.png" height="120" weight=60 alt="">
-			<h1 class="title">HUST</h1>
-			<h2 class="title">Ký Túc Xá Bách khoa </br> Đại học Bách Khoa Hà Nội</h2>
-		</div>
-		<div class="content">
-			<div class="title2">PHẦN MỀM QUẢN LÝ KÝ TÚC XÁ</div>
-			@yield('content')
-		</div>
-		<div class="webtrang"></div>
-		<div class="toolbar_bottom_fix">
-            <div class="pull-left">Ký túc xá Đại học Bách Khoa Hà Nội. Địa chỉ: Phường Bách Khoa- Hai Bà Trưng- Hà Nội. Điện thoại:0335615050</div>                                   
-        </div>
+		<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+		<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+		<section class="login-block">
+    		<div class="container">
+    			<div class="row">
+        			<div class="col-md-4 login-sec">
+            			<h2 class="text-center">Ký túc xá <br> <br>Đại học Bách Khoa Hà Nội</h2>
+							@yield('content')
+					</div>
+                    <div class="col-md-8 banner-sec">
+                        
+                    </div>
+				</div>
+            </div>
+        </section>
     </body>
 </html>
 

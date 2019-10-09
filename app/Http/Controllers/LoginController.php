@@ -80,7 +80,7 @@ class LoginController extends Controller
                     $user->image = "user.jpg";
                     $user->ltk = "sinhvien";
                     $user->save();
-                    return redirect()->back()->with(['flag'=>'danger','message'=>'Tạo thành khoản thành công']);
+                    return redirect()->route('login')->with(['flag'=>'danger','message'=>'Tạo thành khoản thành công, mời bạn đăng nhập']);
                 }   
             }
         }
