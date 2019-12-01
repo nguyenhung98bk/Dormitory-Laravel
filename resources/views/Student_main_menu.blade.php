@@ -1,5 +1,5 @@
 <ul id="main-menu" class="">
-	<li class="active"><a href="{{route('trangchu')}}"><i class="fa fa-home"></i><span>Trang chủ</span></a></li>
+	<li><a href="{{route('trangchu')}}"><i class="fa fa-home"></i><span>Trang chủ</span></a></li>
 	<li><a href="{{route('student_dkphong')}}"><i class="fa fa-thumbs-o-up"></i><span>Đăng ký phòng ở</span></a></li>
 	<li><a href="{{route('student_xemdk')}}"><i class="fa fa-eye"></i><span>Lịch sử đăng ký</span></a></li>
 	<li><a href="{{route('student_bancp')}}"><i class="fa fa-ellipsis-v"></i><i class="fa fa-ellipsis-v"></i><span>Thành viên trong phòng</span></a></li>

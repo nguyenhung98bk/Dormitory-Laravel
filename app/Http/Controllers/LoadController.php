@@ -180,22 +180,32 @@ class LoadController extends Controller
          return redirect()->back();
       }
       public function student_suatt(Request $request){
-         $nssv = $request->input('birthday');
-         $gtsv = $request->input('gtsv');
-         $lop = $request->input('lop');
-         $khoa = $request->input('khoa');
-         $qqsv = $request->input('qqsv');
-         $sdt = $request->input('phone');
-         $mssv = sinhvien::where('email',Auth::user()->email)->value('mssv');
-         $count = phieudangky::where('mssv',$mssv)->count();
-         if($count!=0){
-            sinhvien::where('email',Auth::user()->email)->update(['nssv'=>$nssv,'lop'=>$lop,'khoa'=>$khoa,'qqsv'=>$qqsv,'sdt'=>$sdt]);
-            return redirect()->back()->with(['flag2'=>'danger','message'=>'Cập nhật thông tin thành công']);
-         }
-         else{
-            sinhvien::where('email',Auth::user()->email)->update(['nssv'=>$nssv,'gtsv'=>$gtsv,'lop'=>$lop,'khoa'=>$khoa,'qqsv'=>$qqsv,'sdt'=>$sdt]);
-            return redirect()->back()->with(['flag2'=>'danger','message'=>'Cập nhật thông tin thành công']);
-         }
+        if($request->hasFile('userfile'))
+        {   
+            $file = $request->userfile;
+            $file->move(
+                'img/img_user',
+                $file->getClientOriginalName()
+            );
+        }
+        $link = "{$file->getClientOriginalName()}";
+        $nssv = $request->input('birthday');
+        $gtsv = $request->input('gtsv');
+        $lop = $request->input('lop');
+        $khoa = $request->input('khoa');
+        $qqsv = $request->input('qqsv');
+        $sdt = $request->input('phone');
+        $mssv = sinhvien::where('email',Auth::user()->email)->value('mssv');
+        $count = phieudangky::where('mssv',$mssv)->count();
+        users::where('email',Auth::user()->email)->update(['image'=>$link]);
+        if($count!=0){
+          sinhvien::where('email',Auth::user()->email)->update(['nssv'=>$nssv,'lop'=>$lop,'khoa'=>$khoa,'qqsv'=>$qqsv,'sdt'=>$sdt]);
+          return redirect()->back()->with(['flag2'=>'danger','message'=>'Cập nhật thông tin thành công']);
+        }
+        else{
+          sinhvien::where('email',Auth::user()->email)->update(['nssv'=>$nssv,'gtsv'=>$gtsv,'lop'=>$lop,'khoa'=>$khoa,'qqsv'=>$qqsv,'sdt'=>$sdt]);
+          return redirect()->back()->with(['flag2'=>'danger','message'=>'Cập nhật thông tin thành công']);
+        }
       }
       public function post_ql_thongke(Request $request){
          $year = $request->input('nam');
@@ -238,7 +248,8 @@ class LoadController extends Controller
          $ttcb = canboquanly::where('email',$email)->first();
          $ttkhu = khuktx::all();
          $tenkhu = khuktx::where('id',$ttcb->id_khu)->value('tenkhu');
-         return view('pages.admin_ttcb',['ttcb'=>$ttcb,'tenkhu'=>$tenkhu,'name'=>$name,'ttkhu'=>$ttkhu]);
+         $image = users::where('email',$ttcb->email)->value('image');
+         return view('pages.admin_ttcb',['ttcb'=>$ttcb,'tenkhu'=>$tenkhu,'name'=>$name,'ttkhu'=>$ttkhu,'image'=>$image]);
       }
       public function ad_xoacb($id){
          $email = users::where('id',$id)->value('email');
@@ -257,11 +268,21 @@ class LoadController extends Controller
             $name = users::where('email',$ttcb->email)->value('name');
             $ttkhu = khuktx::all();
             $tenkhu = khuktx::where('id',$ttcb->id_khu)->value('tenkhu');
-            return view('pages.admin_ttcb',['ttcb'=>$ttcb,'tenkhu'=>$tenkhu,'name'=>$name,'ttkhu'=>$ttkhu]);
+            $image = users::where('email',$ttcb->email)->value('image');
+            return view('pages.admin_ttcb',['ttcb'=>$ttcb,'tenkhu'=>$tenkhu,'name'=>$name,'ttkhu'=>$ttkhu,'image'=>$image]);
          }
       }
 
       public function ad_suatt(Request $request,$mscb){
+        if($request->hasFile('userfile'))
+        {   
+            $file = $request->userfile;
+            $file->move(
+                'img/img_user',
+                $file->getClientOriginalName()
+            );
+        }
+        $link = "{$file->getClientOriginalName()}";
          $tenkhu = $request->input('tenkhu');
          $sdt = $request->input('phone');
          $nscb = $request->input('birthday');
@@ -270,6 +291,7 @@ class LoadController extends Controller
          $id_khu = khuktx::where('tenkhu',$tenkhu)->value('id');
          canboquanly::where('mscb',$mscb)->update(['nscb'=>$nscb,'gtcb'=>$gtcb,'qqcb'=>$quequan,'sdt'=>$sdt,'id_khu'=>$id_khu]);
          $email = canboquanly::where('mscb',$mscb)->value('email');
+         users::where('email',$email)->update(['image'=>$link]);
          $id = users::where('email',$email)->value('id');
          return redirect()->route('ad_xemcb',$id)->with(['flag2'=>'danger','message'=>'Cập nhật thông tin thành công']);;
       }

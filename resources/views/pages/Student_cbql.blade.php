@@ -15,7 +15,7 @@
         <tbody>
         	@foreach($cbql as $c)
         		<tr>
-        			<td><img src="img/{{$c->image}}"></td>
+        			<td><img src="img/img_ql/{{$c->image}}" width="80px" max-height="100px"></td>
         			<td>{{$c->name}}</td>
         			<td>{{$c->email}}</td>
         		</tr>

@@ -39,6 +39,29 @@
                 <div class="box-content">
                 	<form action="{{url('ad_suatt',$ttcb->mscb)}}" method="post" class="form-horizontal form-groups-bordered validate" target="_top" enctype="multipart/form-data">
                 		<input type="hidden" name="_token" value="{{ csrf_token() }} ">
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Ảnh thẻ sinh viên</label>
+                            <div class="col-sm-5">
+                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <div class="fileinput-new thumbnail" style="max-width: 200px; max-height: 300px;" data-trigger="fileinput">
+                                        <img src="../img/img_user/{{$image}}" alt="...">
+                                    </div>
+                                    <p id="linkImage"></p>
+                                    <div>
+                                        <span class="btn btn-white btn-file">
+                                            <span class="fileinput-new">Thay đổi ảnh cá nhân</span>
+                                            <input id="link" type="file" name="userfile" onchange="hasLink()">
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+                            function hasLink(){
+                                var x = document.getElementById("link").value;
+                                document.getElementById("linkImage").innerHTML = x;
+                            }
+                        </script>
                 		<div class="form-group">
                             <label class="col-sm-3 control-label">Cán bộ quản lý</label>
                             <div class="col-sm-5">

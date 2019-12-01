@@ -17,7 +17,7 @@
         <tbody>
         	@foreach($cbql as $c)
         		<tr>
-        			<td><img src="img/{{$c->image}}"></td>
+        			<td><img src="img/img_user/{{$c->image}}"></td>
         			<td>{{$c->name}}</td>
         			<td>{{$c->email}}</td>
                     <td><a href="{{route('ad_xemcb',$c->id)}}"><button>Xem</button></a></td>

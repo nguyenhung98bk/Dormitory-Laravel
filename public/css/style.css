@@ -1,11 +1,11 @@
 @import url("//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
 .login-block{
     background: #DE6262;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to bottom, #FFB88C, #DE6262);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to bottom, #FFB88C, #DE6262); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-float:left;
-width:100%;
-padding : 50px 0;
+	background: -webkit-linear-gradient(to bottom, #FFB88C, #DE6262);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to bottom, #FFB88C, #DE6262); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	float:left;
+	width:100%;
+	padding : 50px 0;
 }
 .banner-sec{background:url(../img/can-canh-ktx-co-may-hien-dai-mien-phi-cho-sinh-vien-ngheo.png)  no-repeat left bottom; background-size:cover; min-height:500px; border-radius: 0 10px 10px 0; padding:0;}
 .container{background:#fff; border-radius: 10px; box-shadow:15px 20px 0px rgba(0,0,0,0.1);}
@@ -37,7 +37,33 @@ padding : 50px 0;
 	width: 100%;
 }
 .login-bottom-links{
+	width: 100%;
+	text-align: center;
 	padding-top: 20px;
-	width: 40%;
 	margin: 0 auto;
+}
+@media only screen and (max-width: 768px){
+	.col-md-8.banner-sec{
+		display: none;
+	}
+}
+@media only screen and (min-width: 1280px){
+	.login-block{
+		height: 700px;
+	}
+}
+@media only screen and (min-width: 1440px){
+	.login-block{
+		height: 850px;
+	}
+}
+@media only screen and (min-width: 1680px){
+	.login-block{
+		height: 900px;
+	}
+}
+@media only screen and (min-width: 1920px){
+	.login-block{
+		height: 1050px;
+	}
 }

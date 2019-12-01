@@ -3,16 +3,14 @@
    	<head>
     	<meta charset="utf-8">
     	<meta http-equiv="x-ua-compatible" content="ie=edge">
-    	<title>Login | webktx.bk      </title>
+    	<title>Webktx.bk      </title>
     	<meta name="description" content="">
      	<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="shortcut icon" href="../img/unnamed.jpg">	
-		<link rel="stylesheet" href="{{asset('css/style.css')}}">
+		<link rel="shortcut icon" href="../img/unnamed.jpg">
+        <link rel="stylesheet" href="{{asset('css/style.css')}}">
+        <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
     </head>
     <body>
-		<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-		<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-		<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 		<section class="login-block">
     		<div class="container">
     			<div class="row">
