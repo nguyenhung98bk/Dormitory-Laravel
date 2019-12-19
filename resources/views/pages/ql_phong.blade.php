@@ -1,6 +1,6 @@
 @extends('master')
 @section('content')
-<div class="list_phong">
+<div class="list_phong" style="font-size: 12px;">
 	<h3 style="">
          <i class="fa fa-arrow-circle-o-right"></i>
             Danh sách phòng         
@@ -23,7 +23,7 @@
 				@else {{"Nữ"}}
 				@endif
 			</td>
-			<td><a href="{{route('ql_ttphong',$p->id)}}"><button>Xem thông tin</button></a></td>
+			<td><div><a href="{{route('ql_ttphong',$p->id)}}"><button>Xem thông tin</button></a></div></td>
 		</tr>
 		@endforeach
 	</table>

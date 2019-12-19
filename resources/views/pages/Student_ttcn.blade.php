@@ -25,7 +25,7 @@
                 	<form action="{{url('student_suatt')}}" method="post" class="form-horizontal form-groups-bordered validate" target="_top" enctype="multipart/form-data">
                         <input type="hidden" name="_token" value="{{ csrf_token() }} ">
                         <div class="form-group">
-                            <label for="field-1" class="col-sm-3 control-label">Ảnh thẻ sinh viên</label>
+                            <label for="field-1" class="col-sm-5 control-label">Ảnh thẻ sinh viên</label>
                             <div class="col-sm-5">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-new thumbnail" style="max-width: 200px; max-height: 300px;" data-trigger="fileinput">
@@ -48,19 +48,19 @@
                             }
                         </script>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Tên</label>
+                            <label class="col-sm-5 control-label">Tên</label>
                             <div class="col-sm-5">
                                 <label class=" control-label">{{Auth::user()->name}}</label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">E-mail</label>
+                            <label class="col-sm-5 control-label">E-mail</label>
                             <div class="col-sm-5">
                                 <label class=" control-label">{{Auth::user()->email}}</label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Mã số sinh viên</label>
+                            <label class="col-sm-5 control-label">Mã số sinh viên</label>
                             <div class="col-sm-5">
                                 <label class=" control-label">{{$ttsv->mssv}}</label>
                             </div>
@@ -120,7 +120,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-sm-offset-3 col-sm-5">
+                            <div class="col-sm-offset-4 col-sm-5">
                                 <button type="submit" class="btn btn-info">Cập nhật thông tin</button>
                             </div>
                         </div>

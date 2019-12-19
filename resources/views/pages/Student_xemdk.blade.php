@@ -46,7 +46,7 @@
 				</td>
 				<td>{{$l->ngaydk}}</td>
 				<td>{{$l->updated_at}}</td>
-				<td>{{$l->lephi}}</td>
+				<td>{{number_format($l->lephi)}}</td>
 				<td>{{$l->mscb}}</td>		
 			</tr>
 			@endforeach

@@ -2,7 +2,7 @@
 @section('content')
 <h3 style="">
     <i class="fa fa-arrow-circle-o-right"></i>
-    Thông tin sinh viên           
+    Tạo tài khoản cán bộ           
 </h3>
 ﻿<div class="row">
     <div class="col-md-12">
@@ -10,7 +10,7 @@
         <ul class="nav nav-tabs bordered">
             <li class="active">
                 <a href="#list" data-toggle="tab"><i class="entypo-user"></i>
-                    Thông tin cán bộ
+                    Thông tin tài khoản
                 </a>
             </li>
         </ul>

@@ -1,7 +1,7 @@
 @extends('master')
 @section('content')
 	<h3 style="">
-        <i class="entypo-right-circled"></i>
+        <i class="fa fa-arrow-circle-o-right"></i></i>
         Cán bộ quản lý
     </h3>        
     <table class="table table-bordered datatable" id="table_export">
@@ -17,7 +17,7 @@
         <tbody>
         	@foreach($cbql as $c)
         		<tr>
-        			<td><img src="img/img_user/{{$c->image}}"></td>
+        			<td><img src="img/img_user/{{$c->image}}" width="80px" max-height="100px"></td>
         			<td>{{$c->name}}</td>
         			<td>{{$c->email}}</td>
                     <td><a href="{{route('ad_xemcb',$c->id)}}"><button>Xem</button></a></td>

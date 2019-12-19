@@ -21,11 +21,14 @@ class PageController extends Controller
     	return view('pages.trangchu');
     }
     public function student_dkphong(){
-        $ttkhu = khuktx::ALL();
+        $ttkhu = khuktx::where('trangthai',1)->get();
         return view('pages.Student_dkphong',['ttkhu'=>$ttkhu]);
     }
     public function student_chonphong($id){
-        $ttphong = phong::where('id_khu','=',$id)->paginate(7);
+        $ttphong = phong::where([
+            ['id_khu','=',$id],
+            ['trangthai',1]
+        ])->paginate(7);
         return view('pages.Student_dkphong',['ttphong'=>$ttphong]);
     }
     public function student_bancp(){
@@ -109,6 +112,8 @@ class PageController extends Controller
         ])->sum('sncur');
         $total_student = phieudangky::where([
             ['nam',date('Y')],
+            ['id_phong','>',($max-$count)],
+            ['id_phong','<=',$max],
             ['trangthaidk','!=','cancelled'],
             ['trangthaidk','!=','registered']
         ])->count();
@@ -137,5 +142,22 @@ class PageController extends Controller
     }
     public function ad_ttcb(){
         return view('pages.admin_ttcb');
+    }
+    public function ad_themkhu(){
+        $list_cbql = users::where('ltk','quanly')->get();
+        return view('pages.admin_themkhu',['list_cbql'=>$list_cbql]);
+    }
+    public function ad_suattkhu(){
+        $ttkhu = khuktx::ALL();
+        return view('pages.admin_suatt',['ttkhu'=>$ttkhu]);
+    }
+    public function ad_suakhu($id){
+        $khu = khuktx::where('id',$id)->first();
+        return view('pages.admin_suakhu',['khu'=>$khu]);
+    }
+    public function ad_chonphong($id){
+        $khu = khuktx::where('id',$id)->first();
+        $ttphong = phong::where('id_khu','=',$id)->paginate(7);
+        return view('pages.admin_suatt',['ttphong'=>$ttphong,'khu'=>$khu]);
     }
 }

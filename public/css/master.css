@@ -31,3 +31,6 @@ h4.thongbaoNull{
 .error{
 	padding: 10px;
 }
+.form-group .form-control{
+	font-size: 14px;
+}

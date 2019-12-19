@@ -57,7 +57,7 @@
 		<tr>
 			<td>{{$k->id}}</td>
 			<td>{{$k->tenkhu}}</td>
-			<td>{{$k->giaphong}}</td>
+			<td>{{number_format($k->giaphong)}}</td>
 			<td><a href="{{route('student_chonphong',$k->id)}}"><button>Xem</button></a></td>
 		</tr>
 		@endforeach

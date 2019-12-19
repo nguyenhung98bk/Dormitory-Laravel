@@ -71,7 +71,7 @@
                             </div>
                             <label class="col-sm-2 control-label">Số lệ phí sinh viên đã nộp</label>
                             <div class="col-sm-3">
-                                <label class=" control-label">{{$total_money}}</label>
+                                <label class=" control-label">{{number_format($total_money)}}</label>
                             </div>
                         </div>
                     </form>

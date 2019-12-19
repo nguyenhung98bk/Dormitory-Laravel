@@ -40,7 +40,7 @@
                 	<form action="{{url('ad_suatt',$ttcb->mscb)}}" method="post" class="form-horizontal form-groups-bordered validate" target="_top" enctype="multipart/form-data">
                 		<input type="hidden" name="_token" value="{{ csrf_token() }} ">
                         <div class="form-group">
-                            <label for="field-1" class="col-sm-3 control-label">Ảnh thẻ sinh viên</label>
+                            <label for="field-1" class="col-sm-3 control-label">Ảnh cá nhân</label>
                             <div class="col-sm-5">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-new thumbnail" style="max-width: 200px; max-height: 300px;" data-trigger="fileinput">

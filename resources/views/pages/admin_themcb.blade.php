@@ -2,7 +2,7 @@
 @section('content')
 <h3 style="">
     <i class="fa fa-arrow-circle-o-right"></i>
-    Thông tin sinh viên           
+    Thông tin cán bộ quản lý          
 </h3>
 ﻿<div class="row">
     <div class="col-md-12">

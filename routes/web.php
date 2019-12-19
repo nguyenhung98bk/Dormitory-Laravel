@@ -84,5 +84,15 @@ Route::post('post_ad_ttcb','LoadController@post_ad_ttcb')->name('post_ad_ttcb');
 Route::post('ad_suatt/{mscb}','LoadController@ad_suatt')->name('ad_suatt');
 Route::post('ad_taotk','LoginController@ad_taotk')->name('ad_taotk');
 Route::post('post_ad_thongke','LoadController@post_ad_thongke')->name('post_ad_thongke');
+Route::get('ad_themkhu','PageController@ad_themkhu')->name('ad_themkhu');
+Route::post('post_ad_themkhu','LoadController@ad_themkhu')->name('post_ad_themkhu');
+Route::get('ad_suattkhu','PageController@ad_suattkhu')->name('ad_suattkhu');
+Route::get('ad_chonphong/{id}','PageController@ad_chonphong')->name('ad_chonphong');
+Route::get('ad_suakhu/{id}','PageController@ad_suakhu')->name('ad_suakhu');
+Route::post('post_ad_suakhu','LoginController@post_ad_suakhu')->name('post_ad_suakhu');
+Route::get('ad_updatetrangthai/{trangthai}{id}','LoadController@ad_updatetrangthai')->name('ad_updatetrangthai');
+Route::post('ad_updatekhu/{id}','LoadController@ad_updatekhu')->name('ad_updatekhu');
+Route::post('post_ad_suaphong/{id}','LoadController@post_ad_suaphong')->name('post_ad_suaphong');
+Route::get('ad_updatettphong/{trangthai}{id}','LoadController@ad_updatettphong')->name('ad_updatettphong');
 
 ?>

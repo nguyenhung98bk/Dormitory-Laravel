@@ -15,10 +15,11 @@
         <link rel="stylesheet" href="{{asset('css/neon-forms.css')}}">
         <link rel="stylesheet" href="{{asset('css/custom.css')}}">
         <link rel="stylesheet" href="{{asset('css/black.css')}}">
-        <link rel="stylesheet" href="{{asset('css/font-awesome.min.css')}}">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.3.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="{{asset('css/font-awesome.css')}}">
+        <link rel="stylesheet" href="{{asset('css/fullcalendar.css')}}">
+        <link rel="stylesheet" href="{{asset('css/fulcalendar.print.css')}}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <script src="js/jquery-1.11.0.min.js"></script>
+        <script src="{{asset('js/jquery-1.11.0.min.js')}}"></script>
         <script src="https://lichngaytot.com/Scripts/jquery-1.11.0.min.js"></script><script src="https://lichngaytot.com/Scripts/jquery-ui.min.js"></script>
         <script src="https://lichngaytot.com/Scripts/widgetlichthang.js"></script>
     </head>
@@ -26,10 +27,10 @@
         <div class="page-container">
             <div class="sidebar-menu" style="min-height: 720px">
               <header class="logo-env">
-                <div class="logo"><img src="img/logo.png" style="max-height: 60px"></div>
+                <div class="logo"><img src="../img/logo.png" style="max-height: 60px"></div>
                 <div class="sidebar-collapse" style="">
                     <a href="#" class="sidebar-collapse-icon with-animation">
-                        <i class="entypo-menu"></i>
+                        <i class="entypo-menu fa fa-bars"></i>
                     </a>
                 </div>
                 <div class="sidebar-mobile-menu visible-xs">
@@ -57,9 +58,8 @@
                 <div class="col-md-12 col-sm-12 clearfix ">
                 <ul class="list-inline links-list pull-right">
                     <li class="dropdown language-selector">
-                        <i class="entypo-globe"></i> Website
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-close-others="true">
-                            <i class="entypo-user"></i>
+                            <i class="fa fa-entypo-user"></i>
                             @if(Auth::check())
                                 {{Auth::user()->name}}
                             @else {{"Bạn chưa đăng nhập"}}
@@ -75,5 +75,12 @@
                 @yield('content')
             </div>
         </div>
+
+        <script src="http://csam.com.vn/assets/js/gsap/main-gsap.js"></script>
+        <script src="http://csam.com.vn/assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js"></script>
+        <script src="http://csam.com.vn/assets/js/joinable.js"></script>
+        <script src="http://csam.com.vn/assets/js/resizeable.js"></script>
+        <script src="http://csam.com.vn/assets/js/neon-api.js"></script>
+        <script src="http://csam.com.vn/assets/js/neon-custom.js"></script>
     </body>
 </html>
