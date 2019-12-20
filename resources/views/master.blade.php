@@ -17,7 +17,6 @@
         <link rel="stylesheet" href="{{asset('css/black.css')}}">
         <link rel="stylesheet" href="{{asset('css/font-awesome.css')}}">
         <link rel="stylesheet" href="{{asset('css/fullcalendar.css')}}">
-        <link rel="stylesheet" href="{{asset('css/fulcalendar.print.css')}}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="{{asset('js/jquery-1.11.0.min.js')}}"></script>
         <script src="https://lichngaytot.com/Scripts/jquery-1.11.0.min.js"></script><script src="https://lichngaytot.com/Scripts/jquery-ui.min.js"></script>
