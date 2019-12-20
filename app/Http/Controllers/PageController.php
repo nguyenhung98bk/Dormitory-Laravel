@@ -89,41 +89,19 @@ class PageController extends Controller
         return view('pages.ql_cpsv');
     }
     public function ql_thongke(){
-        $list_nam = phieudangky::select('nam')->groupBy('nam')->get();
-        $year = Date('Y');
         $id_khu = canboquanly::where('email',Auth::user()->email)->value('id_khu');
-        $max = phong::where('id_khu',$id_khu)->max('id');
-        $count = phong::where('id_khu',$id_khu)->count();
-        $nam = phong::where([
-            ['id_khu',$id_khu],
-            ['gioitinh','nam']
-        ])->sum('snmax');
-        $nu = phong::where([
-            ['id_khu',$id_khu],
-            ['gioitinh','nu']
-        ])->sum('snmax');
-        $nam_dkcur = phong::where([
-            ['id_khu',$id_khu],
-            ['gioitinh','nam']
-        ])->sum('sncur');
-        $nu_dkcur = phong::where([
-            ['id_khu',$id_khu],
-            ['gioitinh','nu']
-        ])->sum('sncur');
-        $total_student = phieudangky::where([
-            ['nam',date('Y')],
-            ['id_phong','>',($max-$count)],
-            ['id_phong','<=',$max],
-            ['trangthaidk','!=','cancelled'],
-            ['trangthaidk','!=','registered']
-        ])->count();
-        $total_money = phieudangky::where([
-            ['nam',date('Y')],
-            ['trangthaidk','!=','cancelled'],
-            ['trangthaidk','!=','registered']
-        ])->sum('lephi');
-
-        return view('pages.ql_thongke',['nam'=>$nam,'nu'=>$nu,'nam_dkcur'=>$nam_dkcur,'nu_dkcur'=>$nu_dkcur,'total_student'=>$total_student,'total_money'=>$total_money,'list_nam'=>$list_nam,'year'=>$year]);
+        $id_phong = phong::select('id')->where('id_khu',$id_khu)->get();
+        $nam = date('Y');
+        $nam = $nam-4;
+        for($i=0;$i<5;$i++){
+            $sosv = phieudangky::where('nam',$nam)->whereIn('id_phong',$id_phong)->count();
+            $list[] = array(
+                'nam'=>$nam,
+                'sosv'=>$sosv
+            );
+            $nam = $nam+1;
+        }
+        return view('pages.ql_thongke',['list'=>$list]);
     }
 
     public function ad_dscb(){
@@ -136,9 +114,26 @@ class PageController extends Controller
         return view('pages.admin_taotk',['mscb'=>$mscb]);
     }
     public function ad_thongke(){
-        $list_nam = phieudangky::select('nam')->groupBy('nam')->get();
-        $list_khu = khuktx::all();
-        return view('pages.admin_thongke',['list_nam'=>$list_nam,'list_khu'=>$list_khu]);
+        $khu = khuktx::get();
+        foreach($khu as $k){
+            $list = null;
+            $id_phong = phong::select('id')->where('id_khu',$k->id)->get();
+            $nam = date('Y');
+            $nam = $nam-4;
+            for($i=0;$i<5;$i++){
+                $sosv = phieudangky::where('nam',$nam)->whereIn('id_phong',$id_phong)->count();
+                $list[] = array(
+                    'nam'=>$nam,
+                    'sosv'=>$sosv
+                );
+                $nam = $nam+1;
+            }
+            $list_khu[] = array(
+                'tenkhu'=>$k->tenkhu,
+                'list'=>$list
+            );
+        }
+        return view('pages.admin_thongke',['list_khu'=>$list_khu,'list'=>$list]);
     }
     public function ad_ttcb(){
         return view('pages.admin_ttcb');
