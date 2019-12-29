@@ -1,0 +1,5 @@
+Hướng dẫn cài đặt:
+- Clone project từ github
+- Cài đặt php, laravel
+- db:migrate
+- ....
